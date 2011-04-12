@@ -3,8 +3,8 @@
 import re
 from zope import component
 from zope.interface import implements
-from dolmen.collection import interfaces
-
+from dolmen.collection.interfaces import (
+    IComponent, ICollection, IMutableCollection)
 
 _valid_identifier = re.compile('[A-Za-z][A-Za-z0-9_-]*$')
 
@@ -18,7 +18,7 @@ def createId(name):
 
 
 class Component(object):
-    implements(interfaces.IComponent)
+    implements(IComponent)
 
     identifier = None
     title = None
@@ -46,15 +46,15 @@ class Component(object):
 class Collection(object):
     """Represent a collection of components.
     """
-    implements(interfaces.ICollection)
+    implements(ICollection)
 
-    type = interfaces.IComponent
+    type = IComponent
     factory = None
 
     def __init__(self, *components, **options):
         self.__options = {}
         for name, value in options.items():
-            if name not in interfaces.ICollection:
+            if name not in ICollection:
                 self.__options[name] = value
         self.__dict__.update(self.__options)
         self.__ids = []
@@ -83,7 +83,7 @@ class Collection(object):
             return default
 
     def set(self, id, value):
-        if not interfaces.IMutableCollection.providedBy(self):
+        if not IMutableCollection.providedBy(self):
             raise NotImplementedError
         if not self.type.providedBy(value):
             raise TypeError(value)
@@ -107,7 +107,7 @@ class Collection(object):
         for cmp in components:
             if self.type.providedBy(cmp):
                 self.append(cmp)
-            elif interfaces.ICollection.providedBy(cmp):
+            elif ICollection.providedBy(cmp):
                 for item in cmp:
                     self.append(item)
             else:
@@ -135,12 +135,12 @@ class Collection(object):
         return list(self.__ids)
 
     def __add__(self, other):
-        if interfaces.ICollection.providedBy(other):
+        if ICollection.providedBy(other):
             copy = self.copy()
             for component in other:
                 copy.append(component)
             return copy
-        if interfaces.IComponent.providedBy(other):
+        if IComponent.providedBy(other):
             copy = self.copy()
             copy.append(other)
             return copy
@@ -153,7 +153,7 @@ class Collection(object):
         self.set(id, value)
 
     def __delitem__(self, id):
-        if not interfaces.IMutableCollection.providedBy(self):
+        if not IMutableCollection.providedBy(self):
             raise NotImplementedError
         try:
             index = self.__ids.index(id)
