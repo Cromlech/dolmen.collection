@@ -6,6 +6,7 @@ from zope.interface import implements
 from dolmen.collection.interfaces import (
     IComponent, ICollection, IMutableCollection)
 
+_marker = object()
 _valid_identifier = re.compile('[A-Za-z][A-Za-z0-9_-]*$')
 
 
