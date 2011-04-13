@@ -10,7 +10,6 @@ def sort_components(order):
             "Please provide a list of, at least, two component identifiers.")
 
     def compare(c1, c2, order=order):
-
         try:
             o1 = order.index(c1)
         except ValueError:
