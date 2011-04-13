@@ -1,28 +1,29 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.0'
+version = '0.1'
 
 tests_require = [
     ]
 
 setup(name='dolmen.collection',
       version=version,
-      description="Collection entities",
+      description="Collection of named entities",
       long_description=open("README.txt").read() + "\n" +
+        open(os.path.join("src", "dolmen", "collection", "README.txt")).read(),
         open(os.path.join("docs", "HISTORY.txt")).read(),
       classifiers=[
         "Programming Language :: Python",
         "Topic :: Software Development :: Libraries :: Python Modules",
         ],
       keywords='grok form framework',
-      author='Sylvain Viollon',
-      author_email='thefunny@gmail.com',
-      url='http://pypi.python.org/pypi/zeam.form.base',
+      author='Dolmen Team',
+      author_email='dolmen@list.dolmen-project.org',
+      url='http://pypi.python.org/pypi/dolmen.collection',
       license='BSD',
       package_dir={'': 'src'},
       packages=find_packages('src'),
-      namespace_packages=['dolmen',],
+      namespace_packages=['dolmen', ],
       include_package_data=True,
       zip_safe=False,
       install_requires=[
@@ -30,6 +31,6 @@ setup(name='dolmen.collection',
           'zope.interface',
           'zope.component',
           ],
-      tests_require = tests_require,
-      extras_require = {'test': tests_require},
+      tests_require=tests_require,
+      extras_require={'test': tests_require},
       )

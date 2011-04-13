@@ -1,14 +1,10 @@
-dolmen.collection
+API description
 =================
-
-The component and component collections are basic objects used to
-implement fields, actions and widgets. Their behavior described here
-apply to those objects.
 
 Components
 ----------
 
-First let's see the component:
+First let's see the component, that is elements taking parts in collections::
 
   >>> from dolmen.collection.components import Component
   >>> c1 = Component(u'The Sun', 'sun')
@@ -19,7 +15,7 @@ First let's see the component:
   >>> c1.title
   u'The Sun'
 
-It correctly implement IComponent:
+It correctly implement IComponent::
 
   >>> from zope.interface.verify import verifyObject
   >>> from dolmen.collection import interfaces
@@ -27,7 +23,7 @@ It correctly implement IComponent:
   True
 
 Actually you can create a component without an id, and even using a
-unicode title:
+unicode title::
 
   >>> c2 = Component(u'Moon')
   >>> c2
@@ -38,7 +34,7 @@ unicode title:
   u'Moon'
 
 Or a number (it won't be converted to string. Like this, this support
-Zope translation messages):
+Zope translation messages)::
 
   >>> c69 = Component(69)
   >>> c69.title
@@ -46,7 +42,7 @@ Zope translation messages):
 
 If by doing so, the title contain spaces, they will be replaced by
 ``-``. If UTF-8 character are included, the identifiant will be
-encoded:
+encoded::
 
   >>> c3 = Component(u'Some lost planet')
   >>> c3.identifier
@@ -61,7 +57,7 @@ Spaces are normalized::
    >>> c5.identifier
    'some-unappropriate-spacing'
 
-You can clone a component and change its identifier:
+You can clone a component and change its identifier::
 
   >>> c3clone = c3.clone('new-world')
   >>> c3clone
@@ -71,7 +67,7 @@ You can clone a component and change its identifier:
   >>> c3clone is c3
   False
 
-But you can keep the old one as well:
+But you can keep the old one as well::
 
   >>> c4clone = c4.clone()
   >>> c4clone.identifier
@@ -83,7 +79,7 @@ But you can keep the old one as well:
 Collection
 ----------
 
-Collection are simple objects, implementing ICollection:
+Collection are simple objects, implementing ICollection::
 
   >>> from dolmen.collection.components import Collection
   >>> s1 = Collection()
@@ -98,7 +94,7 @@ Adding components to a collection
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Now we can put components in a collection, and list it back in the
-same order:
+same order::
 
   >>> s1.append(c1)
   >>> list(s1)
@@ -107,21 +103,21 @@ same order:
   >>> list(s1)
   [<Component The Sun>, <Component Moon>]
 
-But you can't add twice the same component:
+But you can't add twice the same component::
 
   >>> s1.append(c1)
   Traceback (most recent call last):
     ...
   ValueError: (u'Duplicate identifier', 'sun')
 
-And this need to be a component:
+And this need to be a component::
 
   >>> s1.append('home')
   Traceback (most recent call last):
     ...
   TypeError: (u'Invalid type', 'home')
 
-You create a collection with components or collection as argument:
+You create a collection with components or collection as argument::
 
   >>> s2 = Collection(Component('Jupiter'), Component('Saturn'))
   >>> list(s2)
@@ -136,7 +132,7 @@ You create a collection with components or collection as argument:
   TypeError: (u'Invalid type', 42)
 
 You can add collections. You will receive a copy with all
-components. Components will ordered as the addition is:
+components. Components will ordered as the addition is::
 
   >>> s3 = s1 + s2
   >>> s3
@@ -152,7 +148,7 @@ components. Components will ordered as the addition is:
   [<Component Jupiter>, <Component Saturn>,
    <Component The Sun>, <Component Moon>]
 
-You can extend a collection. It work pretty much like the construtor:
+You can extend a collection. It work pretty much like the construtor::
 
   >>> s3.extend(Component('Venus'), Component('Uranus'))
   >>> list(s3)
@@ -164,7 +160,7 @@ You can extend a collection. It work pretty much like the construtor:
     ...
   TypeError: (u'Invalid type', 'Kitty')
 
-You can copy a collection:
+You can copy a collection::
 
   >>> s3copy = s3.copy()
   >>> list(s3copy) == list(s3)
@@ -172,7 +168,7 @@ You can copy a collection:
   >>> s3copy is s3
   False
 
-You can remove all elements from a collection:
+You can remove all elements from a collection::
 
   >>> len(s1)
   2
@@ -184,7 +180,7 @@ You can remove all elements from a collection:
 Retriving components from a collection
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can retrieve one element of the collection:
+You can retrieve one element of the collection::
 
   >>> s3.get('moon')
   <Component Moon>
@@ -197,7 +193,7 @@ You can retrieve one element of the collection:
   >>> s3.get('me', default=42)
   42
 
-And dictionnary like access works:
+And dictionnary like access works::
 
   >>> s3['uranus']
   <Component Uranus>
@@ -208,12 +204,12 @@ And dictionnary like access works:
     ...
   KeyError: 'somewhere'
 
-You can get all components ids:
+You can get all components ids::
 
   >>> s3.keys()
   ['sun', 'moon', 'jupiter', 'saturn', 'venus', 'uranus']
 
-You can test if a component id is in the collection:
+You can test if a component id is in the collection::
 
   >>> 'moon' in s3
   True
@@ -221,7 +217,7 @@ You can test if a component id is in the collection:
   False
 
 You can get a new collection with some of the components of the first
-one:
+one::
 
   >>> s4 = s3.select('venus', 'uranus')
   >>> s4 is s3
@@ -231,7 +227,7 @@ one:
   >>> s4.keys()
   ['venus', 'uranus']
 
-Or the other way around some components of a collection:
+Or the other way around some components of a collection::
 
   >>> s5 = s3.omit('sun', 'moon')
   >>> s5 is s3
@@ -335,7 +331,7 @@ Parameters on collections
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can provides extra parameters on collections that will be set as
-attributes on the object:
+attributes on the object::
 
   >>> s6 = Collection(s2, name=u'me', city=u'rotterdam')
   >>> s6
@@ -348,7 +344,7 @@ attributes on the object:
   u'rotterdam'
 
 Those attributes are kept if you use the operations ``select``,
-``omit`` or ``copy``:
+``omit`` or ``copy``::
 
   >>> s6copy = s6.copy()
   >>> s6copy.name

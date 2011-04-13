@@ -96,7 +96,7 @@ class IMutableCollection(ICollection):
     """A collection that can be changed.
     """
 
-    def set(id , value):
+    def set(id, value):
         """Change component associated to this id.
         """
 
