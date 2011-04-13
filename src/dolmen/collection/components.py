@@ -3,6 +3,7 @@
 import re
 from zope import component
 from zope.interface import implements
+from dolmen.collection.load import loadComponents
 from dolmen.collection.interfaces import (
     IComponent, ICollection, IMutableCollection)
 
