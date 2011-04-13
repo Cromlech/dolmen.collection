@@ -363,3 +363,5 @@ Those attributes are kept if you use the operations ``select``,
   u'me'
   >>> s6select.city
   u'rotterdam'
+
+

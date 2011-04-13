@@ -10,13 +10,14 @@ setup(name='dolmen.collection',
       version=version,
       description="Collection of named entities",
       long_description=open("README.txt").read() + "\n" +
-        open(os.path.join("src", "dolmen", "collection", "README.txt")).read(),
+        open(os.path.join("src", "dolmen", "collection", "README.txt"))
+                                                                   .read() +
         open(os.path.join("docs", "HISTORY.txt")).read(),
       classifiers=[
         "Programming Language :: Python",
         "Topic :: Software Development :: Libraries :: Python Modules",
         ],
-      keywords='grok form framework',
+      keywords='collection library',
       author='Dolmen Team',
       author_email='dolmen@list.dolmen-project.org',
       url='http://pypi.python.org/pypi/dolmen.collection',
