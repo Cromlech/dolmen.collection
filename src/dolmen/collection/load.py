@@ -12,7 +12,7 @@ def loadComponents():
     global _loaded
     if _loaded:
         return
-    for loader_entry in iter_entry_points('zeam.form.components'):
+    for loader_entry in iter_entry_points('dolmen.collection.components'):
         loader = loader_entry.load()
         if not callable(loader):
             raise TypeError(
