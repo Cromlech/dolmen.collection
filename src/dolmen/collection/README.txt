@@ -181,7 +181,7 @@ Ignoring already defined components
 
   >>> from dolmen.collection.components import IGNORE 
   >>> ignoring = Collection()
-  >>> ignoring.behavior = IGNORE()
+  >>> ignoring.behavior = IGNORE
   
   >>> ignoring.append(c1)
   >>> list(ignoring)
@@ -204,7 +204,7 @@ Overriding already defined components
 
   >>> from dolmen.collection.components import OVERRIDE 
   >>> overriding = Collection()
-  >>> overriding.behavior = OVERRIDE()
+  >>> overriding.behavior = OVERRIDE
 
   >>> overriding.append(c1)
   >>> list(overriding)

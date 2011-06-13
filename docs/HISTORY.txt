@@ -4,7 +4,7 @@ Changes
 0.3 (2011-06-13)
 ----------------
 
-* Added behavior to the collection allowing the override of the
+* Added behavior to the collection allowing the override or ignore of the
   components.
 
 

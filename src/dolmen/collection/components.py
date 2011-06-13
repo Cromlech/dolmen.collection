@@ -10,9 +10,21 @@ from dolmen.collection.interfaces import (
 _marker = object()
 _valid_identifier = re.compile('[A-Za-z][A-Za-z0-9_-]*$')
 
-OVERRIDE = type('behavior_override', (object,), {})
-UNIQUE = type('behavior_unique', (object,), {})
-IGNORE = type('behavior_ignore', (object,), {})
+
+class Marker(object):
+    pass
+
+
+class OVERRIDE(Marker):
+    pass
+
+
+class UNIQUE(Marker):
+    pass
+
+
+class IGNORE(Marker):
+    pass
 
 
 def createId(name):
@@ -56,7 +68,7 @@ class Collection(object):
 
     type = IComponent
     factory = None
-    behavior = UNIQUE()
+    behavior = UNIQUE
 
     def __init__(self, *components, **options):
         self.__options = {}
@@ -102,9 +114,9 @@ class Collection(object):
     def append(self, component):
         if self.type.providedBy(component):
             if component.identifier in self.__ids:
-                if isinstance(self.behavior, OVERRIDE):
+                if issubclass(self.behavior, OVERRIDE):
                     self.set(component.identifier, component)
-                elif isinstance(self.behavior, UNIQUE):
+                elif issubclass(self.behavior, UNIQUE):
                     raise ValueError(
                         u"Duplicate identifier", component.identifier)
             else:
