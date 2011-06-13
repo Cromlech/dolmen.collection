@@ -176,8 +176,31 @@ You can remove all elements from a collection::
   >>> len(s1)
   0
 
-Managing the override
-.....................
+Ignoring already defined components
+...................................
+
+  >>> from dolmen.collection.components import IGNORE 
+  >>> ignoring = Collection()
+  >>> ignoring.behavior = IGNORE()
+  
+  >>> ignoring.append(c1)
+  >>> list(ignoring)
+  [<Component The Sun>]
+  >>> ignoring.append(c2)
+  >>> list(ignoring)
+  [<Component The Sun>, <Component Moon>]
+
+  >>> c1prime = Component(u'The Sun prime', 'sun')
+  
+You can add twice the same component, the second is ignored::
+
+  >>> ignoring.append(c1prime)
+  >>> list(ignoring)
+  [<Component The Sun>, <Component Moon>]
+
+
+Overriding already defined components
+.....................................
 
   >>> from dolmen.collection.components import OVERRIDE 
   >>> overriding = Collection()
