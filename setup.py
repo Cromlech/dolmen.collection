@@ -3,16 +3,24 @@ import os
 
 version = '0.3'
 
+
+def long_description(*desc):
+    text = []
+    for d in desc:
+        with open(d) as f:
+            text.append(f.read())
+    return '\n\n'.join(text)
+
 tests_require = [
     ]
 
 setup(name='dolmen.collection',
       version=version,
       description="Collection of named entities",
-      long_description=open("README.txt").read() + "\n" +
-        open(os.path.join("src", "dolmen", "collection", "README.txt"))
-                                                                   .read() +
-        open(os.path.join("docs", "HISTORY.txt")).read(),
+      long_description=long_description(
+          "README.txt",
+          os.path.join("src", "dolmen", "collection", "README.txt"),
+          os.path.join("docs", "HISTORY.txt")),
       classifiers=[
         "Programming Language :: Python",
         "Topic :: Software Development :: Libraries :: Python Modules",

@@ -1,5 +1,5 @@
-API description
-=================
+API description
+===============
 
 Components
 ----------
