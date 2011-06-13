@@ -176,6 +176,39 @@ You can remove all elements from a collection::
   >>> len(s1)
   0
 
+Managing the override
+.....................
+
+  >>> from dolmen.collection.components import OVERRIDE 
+  >>> overriding = Collection()
+  >>> overriding.behavior = OVERRIDE()
+
+  >>> overriding.append(c1)
+  >>> list(overriding)
+  [<Component The Sun>]
+  >>> overriding.append(c2)
+  >>> list(overriding)
+  [<Component The Sun>, <Component Moon>]
+
+  >>> c1prime = Component(u'The Sun prime', 'sun')
+  
+You can add twice the same component, the second overrides the first::
+
+  >>> overriding.append(c1prime)
+  Traceback (most recent call last):
+  ...
+  NotImplementedError
+
+It needs to be a IMutableCollection::
+
+  >>> from dolmen.collection import IMutableCollection
+  >>> from zope.interface import directlyProvides
+  >>> directlyProvides(overriding, IMutableCollection)
+
+  >>> overriding.append(c1prime)
+  >>> list(overriding)
+  [<Component The Sun prime>, <Component Moon>]
+
 
 Retriving components from a collection
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -363,5 +396,3 @@ Those attributes are kept if you use the operations ``select``,
   u'me'
   >>> s6select.city
   u'rotterdam'
-
-

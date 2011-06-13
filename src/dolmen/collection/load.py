@@ -23,9 +23,9 @@ def loadComponents():
 
 
 def reloadComponents():
-    """Reload all zeam components.
+    """Reload all components.
 
-    This is mainly used by testing layers.
+    Mainly used by testing layers.
     """
     global _loaded
     _loaded = False

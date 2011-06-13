@@ -10,6 +10,9 @@ from dolmen.collection.interfaces import (
 _marker = object()
 _valid_identifier = re.compile('[A-Za-z][A-Za-z0-9_-]*$')
 
+OVERRIDE = type('behavior_override', (object,), {})
+UNIQUE = type('behavior_unique', (object,), {})
+
 
 def createId(name):
     # Create a valid id from any string.
@@ -52,6 +55,7 @@ class Collection(object):
 
     type = IComponent
     factory = None
+    behavior = UNIQUE()
 
     def __init__(self, *components, **options):
         self.__options = {}
@@ -96,12 +100,15 @@ class Collection(object):
 
     def append(self, component):
         if self.type.providedBy(component):
-            if component.identifier not in self.__ids:
+            if component.identifier in self.__ids:
+                if isinstance(self.behavior, OVERRIDE):
+                    self.set(component.identifier, component)
+                else:
+                    raise ValueError(
+                        u"Duplicate identifier", component.identifier)
+            else:
                 self.__ids.append(component.identifier)
                 self.__components.append(component)
-            else:
-                raise ValueError(
-                    u"Duplicate identifier", component.identifier)
         else:
             raise TypeError(u"Invalid type", component)
 

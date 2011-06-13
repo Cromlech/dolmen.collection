@@ -1,6 +1,13 @@
 Changes
 =======
 
+0.3 (2011-06-13)
+----------------
+
+* Added behavior to the collection allowing the override of the
+  components.
+
+
 0.2 (2011-04-14)
 ----------------
 
