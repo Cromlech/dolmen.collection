@@ -10,5 +10,3 @@ It originated from zeam.form where it was used to implement forms as
 collections of fields, actions and widgets.
 
 .. contents::
-
-

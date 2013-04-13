@@ -1,6 +1,13 @@
 Changes
 =======
 
+0.4 (unreleased)
+----------------
+
+* Reduced the dependencies by removing the unnecessary call of `zope.component`
+  in the adaptation of the factory.
+
+
 0.3 (2011-06-13)
 ----------------
 

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import re
-from zope import component
 from zope.interface import implements
 from dolmen.collection.load import loadComponents
 from dolmen.collection.interfaces import (
@@ -135,7 +134,7 @@ class Collection(object):
             else:
                 if self.factory is not None:
                     loadComponents()
-                    factory = component.queryAdapter(cmp, self.factory)
+                    factory = self.factory(cmp, None)
                     if factory is not None:
                         for item in factory.produce():
                             self.append(item)

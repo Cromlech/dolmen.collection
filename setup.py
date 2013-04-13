@@ -1,15 +1,17 @@
+# -*- coding: utf-8 -*-
+
 from setuptools import setup, find_packages
 import os
 
-version = '0.3'
+version = '0.4-dev'
 
 
 def long_description(*desc):
     text = []
     for d in desc:
         with open(d) as f:
-            text.append(f.read())
-    return '\n\n'.join(text)
+            text.append(unicode(f.read(), 'utf-8'))
+    return u'\n\n'.join(text)
 
 tests_require = [
     ]
@@ -38,7 +40,6 @@ setup(name='dolmen.collection',
       install_requires=[
           'setuptools',
           'zope.interface',
-          'zope.component',
           ],
       tests_require=tests_require,
       extras_require={'test': tests_require},
