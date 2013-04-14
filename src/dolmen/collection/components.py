@@ -134,7 +134,7 @@ class Collection(object):
             else:
                 if self.factory is not None:
                     loadComponents()
-                    factory = self.factory(cmp, None)
+                    factory = self.factory(cmp, default=None)
                     if factory is not None:
                         for item in factory.produce():
                             self.append(item)
