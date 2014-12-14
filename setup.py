@@ -2,8 +2,13 @@
 
 from setuptools import setup, find_packages
 import os
+import sys
 
 version = '0.4-dev'
+
+
+if not sys.version < '3':
+    unicode = str
 
 
 def long_description(*desc):

@@ -1,13 +1,17 @@
 # -*- coding: utf-8 -*-
 
 import re
-from zope.interface import implements
+from zope.interface import implementer
 from dolmen.collection.load import loadComponents
 from dolmen.collection.interfaces import (
     IComponent, ICollection, IMutableCollection)
 
 _marker = object()
 _valid_identifier = re.compile('[A-Za-z][A-Za-z0-9_-]*$')
+
+
+def cmp(a, b):
+    return (a > b) - (a < b)
 
 
 class Marker(object):
@@ -34,8 +38,8 @@ def createId(name):
     return identifier.encode('hex')
 
 
+@implementer(IComponent)
 class Component(object):
-    implements(IComponent)
 
     identifier = None
     title = None
@@ -60,10 +64,10 @@ class Component(object):
         return "<%s %s>" % (self.__class__.__name__, self.title)
 
 
+@implementer(ICollection)
 class Collection(object):
     """Represent a collection of components.
     """
-    implements(ICollection)
 
     type = IComponent
     factory = None
@@ -84,8 +88,8 @@ class Collection(object):
         self.__components = [c for c in reversed(self.__components)]
         self.__ids = [c.identifier for c in self.__components]
 
-    def sort(self, cmp=cmp, key=lambda c: c.identifier, reverse=False):
-        self.__components.sort(cmp=cmp, key=key, reverse=reverse)
+    def sort(self, key=lambda c: c.identifier, reverse=False):
+        self.__components.sort(key=key, reverse=reverse)
         self.__ids = [c.identifier for c in self.__components]
 
     def clear(self):
