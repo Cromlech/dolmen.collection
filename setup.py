@@ -7,15 +7,18 @@ import sys
 version = '0.4-dev'
 
 
-if not sys.version < '3':
-    unicode = str
+if sys.version < '3':
+    def read_doc(raw):
+        return unicode(raw, 'utf-8')
+else:
+    read_doc = str
 
 
 def long_description(*desc):
     text = []
     for d in desc:
         with open(d) as f:
-            text.append(unicode(f.read(), 'utf-8'))
+            text.append(read_doc(f.read()))
     return u'\n\n'.join(text)
 
 tests_require = [
