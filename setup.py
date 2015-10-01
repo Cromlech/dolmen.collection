@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 import os
 import sys
 
-version = '0.4-dev'
+version = '0.4.dev'
 
 
 if sys.version < '3':
