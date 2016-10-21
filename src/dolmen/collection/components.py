@@ -1,13 +1,20 @@
 # -*- coding: utf-8 -*-
 
 import re
+import sys
 from zope.interface import implementer
 from dolmen.collection.load import loadComponents
 from dolmen.collection.interfaces import (
     IComponent, ICollection, IMutableCollection)
 
+
 _marker = object()
 _valid_identifier = re.compile('[A-Za-z][A-Za-z0-9_-]*$')
+
+
+is_python3 = sys.version_info.major == 3
+if is_python3:
+    unicode = str
 
 
 def cmp(a, b):
@@ -32,7 +39,9 @@ class IGNORE(Marker):
 
 def createId(name):
     # Create a valid id from any string.
-    identifier = unicode(name).strip().encode('utf-8').replace(' ', '-')
+    if isinstance(name, bytes):
+        name = name.encode('utf-8')
+    identifier = name.strip().replace(' ', '-')
     if _valid_identifier.match(identifier):
         return identifier.lower()
     return identifier.encode('hex')
