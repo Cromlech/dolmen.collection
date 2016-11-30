@@ -14,7 +14,14 @@ _valid_identifier = re.compile('[A-Za-z][A-Za-z0-9_-]*$')
 
 is_python3 = sys.version_info.major == 3
 if is_python3:
+    import codecs
     unicode = str
+
+    def hexify(val):
+        return codecs.encode(val, 'hex_codec')
+else:
+    def hexify(val):
+        return val.encode('hex')
 
 
 def cmp(a, b):
@@ -39,12 +46,13 @@ class IGNORE(Marker):
 
 def createId(name):
     # Create a valid id from any string.
-    if isinstance(name, bytes):
-        name = name.encode('utf-8')
     identifier = name.strip().replace(' ', '-')
     if _valid_identifier.match(identifier):
         return identifier.lower()
-    return identifier.encode('hex')
+
+    if isinstance(identifier, unicode):
+        identifier = identifier.encode('utf-8')
+    return hexify(identifier)
 
 
 @implementer(IComponent)
