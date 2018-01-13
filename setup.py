@@ -4,22 +4,15 @@ from setuptools import setup, find_packages
 import os
 import sys
 
-version = '0.4.dev0'
-
-
-if sys.version < '3':
-    def read_doc(raw):
-        return unicode(raw, 'utf-8')
-else:
-    read_doc = str
+version = '0.5.dev0'
 
 
 def long_description(*desc):
     text = []
     for d in desc:
         with open(d) as f:
-            text.append(read_doc(f.read()))
-    return u'\n\n'.join(text)
+            text.append(f.read())
+    return '\n\n'.join(text)
 
 tests_require = [
     ]
@@ -29,7 +22,6 @@ setup(name='dolmen.collection',
       description="Collection of named entities",
       long_description=long_description(
           "README.txt",
-          os.path.join("src", "dolmen", "collection", "README.txt"),
           os.path.join("docs", "HISTORY.txt")),
       classifiers=[
         "Programming Language :: Python",

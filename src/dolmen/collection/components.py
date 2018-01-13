@@ -2,6 +2,7 @@
 
 import re
 import sys
+import hashlib
 from zope.interface import implementer
 from dolmen.collection.load import loadComponents
 from dolmen.collection.interfaces import (
@@ -10,18 +11,6 @@ from dolmen.collection.interfaces import (
 
 _marker = object()
 _valid_identifier = re.compile('[A-Za-z][A-Za-z0-9_-]*$')
-
-
-is_python3 = sys.version_info.major == 3
-if is_python3:
-    import codecs
-    unicode = str
-
-    def hexify(val):
-        return codecs.encode(val, 'hex_codec')
-else:
-    def hexify(val):
-        return val.encode('hex')
 
 
 def cmp(a, b):
@@ -45,14 +34,14 @@ class IGNORE(Marker):
 
 
 def createId(name):
-    # Create a valid id from any string.
-    identifier = name.strip().replace(' ', '-')
-    if _valid_identifier.match(identifier):
-        return identifier.lower()
 
-    if isinstance(identifier, unicode):
-        identifier = identifier.encode('utf-8')
-    return hexify(identifier)
+    if isinstance(name, str):
+        name = name.strip().replace(' ', '-')
+        if _valid_identifier.match(name):
+            return name.lower()
+        name = name.encode('utf-8')
+
+    return int(hashlib.md5(name).hexdigest(), 16)
 
 
 @implementer(IComponent)
@@ -68,7 +57,7 @@ class Component(object):
                 title = identifier
                 if title is None:
                     raise ValueError(
-                        u"Need at least a title to build a component.")
+                        "Need at least a title to build a component.")
             self.title = title
         if identifier is None:
             identifier = createId(self.title)
@@ -138,12 +127,12 @@ class Collection(object):
                     self.set(component.identifier, component)
                 elif issubclass(self.behavior, UNIQUE):
                     raise ValueError(
-                        u"Duplicate identifier", component.identifier)
+                        "Duplicate identifier", component.identifier)
             else:
                 self.__ids.append(component.identifier)
                 self.__components.append(component)
         else:
-            raise TypeError(u"Invalid type", component)
+            raise TypeError("Invalid type", component)
 
     def extend(self, *components):
         for cmp in components:
@@ -160,7 +149,7 @@ class Collection(object):
                         for item in factory.produce():
                             self.append(item)
                         continue
-                raise TypeError(u'Invalid type', cmp)
+                raise TypeError('Invalid type', cmp)
 
     def select(self, *ids):
         components = (c for c in self.__components if c.identifier in ids)
