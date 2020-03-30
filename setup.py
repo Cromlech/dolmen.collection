@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 import os
 import sys
 
-version = '0.5'
+version = '0.6.dev0'
 
 
 def long_description(*desc):
