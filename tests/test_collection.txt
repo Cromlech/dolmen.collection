@@ -7,13 +7,13 @@ Components
 First let's see the component, that is elements taking parts in collections::
 
   >>> from dolmen.collection.components import Component
-  >>> c1 = Component(u'The Sun', 'sun')
+  >>> c1 = Component('The Sun', 'sun')
   >>> c1
   <Component The Sun>
   >>> c1.identifier
   'sun'
   >>> c1.title  # doctest: +ALLOW_UNICODE
-  u'The Sun'
+  'The Sun'
 
 It correctly implement IComponent::
 
@@ -24,13 +24,13 @@ It correctly implement IComponent::
 
 You can create a component without an id,  using a title::
 
-  >>> c2 = Component(u'Moon')
+  >>> c2 = Component('Moon')
   >>> c2
   <Component Moon>
   >>> c2.identifier
   'moon'
   >>> c2.title  # doctest: +ALLOW_UNICODE
-  u'Moon'
+  'Moon'
 
 Title only accept string argument
 a number (it won't be converted to string. Like this, this support
@@ -44,10 +44,10 @@ If by doing so, the title contain spaces, they will be replaced by
 ``-``. If UTF-8 character are included, the identifiant will be
 encoded::
 
-  >>> c3 = Component(u'Some lost planet')
+  >>> c3 = Component('Some lost planet')
   >>> c3.identifier
   'some-lost-planet'
-  >>> c4 = Component(u'État du désir')
+  >>> c4 = Component('État du désir')
   >>> c4.identifier
   '44379436291150180186884816837720809088'
 
@@ -179,10 +179,10 @@ You can remove all elements from a collection::
 Ignoring already defined components
 ...................................
 
-  >>> from dolmen.collection.components import IGNORE 
+  >>> from dolmen.collection.components import IGNORE
   >>> ignoring = Collection()
   >>> ignoring.behavior = IGNORE
-  
+
   >>> ignoring.append(c1)
   >>> list(ignoring)
   [<Component The Sun>]
@@ -190,8 +190,8 @@ Ignoring already defined components
   >>> list(ignoring)
   [<Component The Sun>, <Component Moon>]
 
-  >>> c1prime = Component(u'The Sun prime', 'sun')
-  
+  >>> c1prime = Component('The Sun prime', 'sun')
+
 You can add twice the same component, the second is ignored::
 
   >>> ignoring.append(c1prime)
@@ -202,7 +202,7 @@ You can add twice the same component, the second is ignored::
 Overriding already defined components
 .....................................
 
-  >>> from dolmen.collection.components import OVERRIDE 
+  >>> from dolmen.collection.components import OVERRIDE
   >>> overriding = Collection()
   >>> overriding.behavior = OVERRIDE
 
@@ -213,8 +213,8 @@ Overriding already defined components
   >>> list(overriding)
   [<Component The Sun>, <Component Moon>]
 
-  >>> c1prime = Component(u'The Sun prime', 'sun')
-  
+  >>> c1prime = Component('The Sun prime', 'sun')
+
 You can add twice the same component, the second overrides the first::
 
   >>> overriding.append(c1prime)
@@ -389,7 +389,7 @@ Parameters on collections
 You can provides extra parameters on collections that will be set as
 attributes on the object::
 
-  >>> s6 = Collection(s2, name=u'me', city=u'rotterdam')
+  >>> s6 = Collection(s2, name='me', city='rotterdam')
   >>> s6
   <Collection>
   >>> list(s6)

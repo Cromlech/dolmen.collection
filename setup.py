@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 import os
 import sys
 
-version = '0.5.dev0'
+version = '0.5'
 
 
 def long_description(*desc):
@@ -14,8 +14,7 @@ def long_description(*desc):
             text.append(f.read())
     return '\n\n'.join(text)
 
-tests_require = [
-    ]
+tests_require = ['pytest']
 
 setup(name='dolmen.collection',
       version=version,

@@ -1,8 +1,15 @@
 Changes
 =======
 
-0.4 (unreleased)
+0.5 (2020-03-30)
 ----------------
+
+* Moved to python 3.6+ only.
+* Added requirements.txt for pip installation.
+
+
+0.4
+----
 
 * Reduced the dependencies by removing the unnecessary call of `zope.component`
   in the adaptation of the factory.
